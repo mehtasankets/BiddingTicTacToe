@@ -9,5 +9,8 @@ public enum GameStatus {
     PLAYER_B_TURN,
     PLAYER_A_WON,
     PLAYER_B_WON,
-    MATCH_DRAWN;
+    MATCH_DRAWN,
+    CROSS,
+    ZERO,
+    BLANK;
 }

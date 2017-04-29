@@ -1,5 +1,6 @@
 package com.codersdayin.biddingtictactoe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -51,69 +52,26 @@ public class MenuActivity extends AppCompatActivity
         b32 = (Button) findViewById(R.id.b32);
         b33 = (Button) findViewById(R.id.b33);
 
-        b11.setOnClickListener(new View.OnClickListener() {
+        setButtonListener(b11);
+        setButtonListener(b12);
+        setButtonListener(b13);
+
+        setButtonListener(b21);
+        setButtonListener(b22);
+        setButtonListener(b23);
+
+        setButtonListener(b31);
+        setButtonListener(b32);
+        setButtonListener(b33);
+    }
+
+    private void setButtonListener(final Button button) {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setText(b11);
+                setText(button);
             }
         });
-
-        b12.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b12);
-            }
-        });
-
-        b13.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b13);
-            }
-        });
-
-        b21.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b21);
-            }
-        });
-
-        b22.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b22);
-            }
-        });
-
-        b23.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b23);
-            }
-        });
-
-        b31.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b31);
-            }
-        });
-
-        b32.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b32);
-            }
-        });
-
-        b33.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                setText(b33);
-            }
-        });
-
     }
 
     private void setText(Button button) {
@@ -128,6 +86,74 @@ public class MenuActivity extends AppCompatActivity
             button.setText("X");
             nextTurn = GameStatus.PLAYER_A_TURN;
         }
+        GameStatus status = updateGameStatus();
+        if(status != GameStatus.BLANK) {
+            Intent i = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage(getBaseContext().getPackageName());
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(i);
+        }
+    }
+
+    private GameStatus updateGameStatus() {
+
+        GameStatus[][] table = {
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK}};
+
+        table[0][0] = getCellStatus(b11);
+        table[0][1] = getCellStatus(b12);
+        table[0][2] = getCellStatus(b13);
+
+        table[1][0] = getCellStatus(b21);
+        table[1][1] = getCellStatus(b22);
+        table[1][2] = getCellStatus(b23);
+
+        table[2][0] = getCellStatus(b31);
+        table[2][1] = getCellStatus(b32);
+        table[2][2] = getCellStatus(b33);
+
+        GameStatus finalGameStatus = GameStatus.BLANK;
+        // row checking
+        for(int i=0; i<3; i++) {
+            if(table[i][0] == table[i][1] && table[i][1] == table[i][2] && table[i][0] != GameStatus.BLANK) {
+                finalGameStatus = table[i][0];
+            }
+        }
+
+        // column checking
+        for(int i=0; i<3; i++) {
+            if(table[0][i] == table[1][i] && table[1][i] == table[2][i] && table[0][i] != GameStatus.BLANK) {
+                finalGameStatus = table[0][i];
+            }
+        }
+
+        // cross checking
+        if(table[0][0] == table[1][1] && table[1][1] == table[2][2] && table[0][0] != GameStatus.BLANK) {
+            finalGameStatus = table[0][0];
+        }
+        if(table[0][2] == table[1][1] && table[1][1] == table[2][0] && table[0][2] != GameStatus.BLANK) {
+            finalGameStatus = table[0][2];
+        }
+
+        if(finalGameStatus != GameStatus.BLANK) {
+            if(finalGameStatus == GameStatus.ZERO) {
+                Toast.makeText(this, "Player A Won", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Player B Won", Toast.LENGTH_SHORT).show();
+            }
+        }
+        return finalGameStatus;
+    }
+
+    private GameStatus getCellStatus(Button button) {
+        if(button.getText().equals("O")) {
+            return GameStatus.ZERO;
+        } if(button.getText().equals("X")) {
+            return GameStatus.CROSS;
+        }
+        return GameStatus.BLANK;
     }
 
     @Override
