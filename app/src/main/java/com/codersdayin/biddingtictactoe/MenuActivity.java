@@ -28,15 +28,6 @@ public class MenuActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -54,7 +45,7 @@ public class MenuActivity extends AppCompatActivity
 
         b21 = (Button) findViewById(R.id.b21);
         b22 = (Button) findViewById(R.id.b22);
-        b22 = (Button) findViewById(R.id.b23);
+        b23 = (Button) findViewById(R.id.b23);
 
         b31 = (Button) findViewById(R.id.b31);
         b32 = (Button) findViewById(R.id.b32);
@@ -66,10 +57,68 @@ public class MenuActivity extends AppCompatActivity
                 setText(b11);
             }
         });
+
+        b12.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b12);
+            }
+        });
+
+        b13.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b13);
+            }
+        });
+
+        b21.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b21);
+            }
+        });
+
+        b22.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b22);
+            }
+        });
+
+        b23.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b23);
+            }
+        });
+
+        b31.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b31);
+            }
+        });
+
+        b32.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b32);
+            }
+        });
+
+        b33.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b33);
+            }
+        });
+
     }
 
     private void setText(Button button) {
-        if(button.getText() == null || button.getText().equals("")) {
+        if(button.getText() == null || !button.getText().equals("")) {
+            // nothing to be done here.
             return;
         }
         if(nextTurn == GameStatus.PLAYER_A_TURN) {
