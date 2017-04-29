@@ -3,16 +3,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="5"
+    android:weightSum="7"
     android:orientation="vertical"
     tools:context="com.codersdayin.biddingtictactoe.MenuActivity"
     tools:showIn="@layout/app_bar_menu">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="3"
+        android:layout_weight="1">
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
         android:orientation="horizontal"
         android:layout_weight="1">
+        <TextView
+            android:id="@+id/currentBidA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textSize="30dp"
+            android:text="100"
+            android:textAlignment="center"/>
+        <TextView
+            android:id="@+id/currentBidB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textSize="30dp"
+            android:text="100"
+            android:textAlignment="center"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <EditText
+            android:id="@+id/playerABid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Enter bid"/>
+        <TextView
+            android:id="@+id/playerBBid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:textSize="30dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -96,8 +143,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="3"
-        android:orientation="horizontal"
+        android:weightSum="1"
+        android:orientation="vertical"
         android:layout_weight="1">
     </LinearLayout>
 
