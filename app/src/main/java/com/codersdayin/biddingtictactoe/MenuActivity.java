@@ -94,6 +94,7 @@ public class MenuActivity extends AppCompatActivity
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
                     Integer currentBidA = Integer.parseInt(currBid.getText().toString());
                     currBid.setText("");
+                    currBid.clearFocus();
                     Double randomBid = (Math.random() * (remainingBidB - 1)) + 1;
                     Integer currentBidB = randomBid.intValue();
                     currentBidBText.setText(currentBidB.toString());
