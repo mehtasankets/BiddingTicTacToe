@@ -52,7 +52,9 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="number"
-            android:hint="Enter bid"/>
+            android:hint="Enter bid"
+            android:textAlignment="center"
+            android:textSize="30dp"/>
         <TextView
             android:id="@+id/playerBBid"
             android:layout_width="match_parent"
@@ -73,19 +75,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b12"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b13"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -99,19 +101,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b22"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b23"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -125,19 +127,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b32"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
         <Button
             android:id="@+id/b33"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textSize="80dp"/>
+            android:textSize="40dp"/>
     </LinearLayout>
 
     <LinearLayout
