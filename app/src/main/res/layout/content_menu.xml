@@ -20,7 +20,7 @@
         android:orientation="horizontal"
         android:layout_weight="1">
         <TextView
-            android:id="@+id/currentBidA"
+            android:id="@+id/remainingBidA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -29,7 +29,7 @@
             android:text="100"
             android:textAlignment="center"/>
         <TextView
-            android:id="@+id/currentBidB"
+            android:id="@+id/remainingBidB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +46,7 @@
         android:orientation="horizontal"
         android:layout_weight="1">
         <EditText
-            android:id="@+id/playerABid"
+            android:id="@+id/currentBidA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,11 +57,12 @@
             android:textSize="30dp"
             android:imeOptions="actionDone"/>
         <TextView
-            android:id="@+id/playerBBid"
+            android:id="@+id/currentBidB"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
+            android:textAlignment="center"
             android:textSize="30dp" />
     </LinearLayout>
 

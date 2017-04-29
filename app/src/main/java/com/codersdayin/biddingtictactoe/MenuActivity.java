@@ -2,6 +2,7 @@ package com.codersdayin.biddingtictactoe;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.NavigationView;
@@ -22,12 +23,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     GameStatus nextTurn;
     Button b11, b12, b13, b21, b22, b23, b31, b32, b33;
-    EditText currBid;
+    EditText currentBidA;
+    TextView currentBidBText, remainingBidAText, remainingBidBText;
+    boolean bidNotReceived = true;
+    Integer remainingBidA = 100, remainingBidB = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +52,10 @@ public class MenuActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         nextTurn = GameStatus.PLAYER_A_TURN;
+
+        currentBidBText = (TextView) findViewById(R.id.currentBidB);
+        remainingBidAText = (TextView) findViewById(R.id.remainingBidA);
+        remainingBidBText = (TextView) findViewById(R.id.remainingBidB);
 
         b11 = (Button) findViewById(R.id.b11);
         b12 = (Button) findViewById(R.id.b12);
@@ -71,20 +81,77 @@ public class MenuActivity extends AppCompatActivity
         setButtonListener(b32);
         setButtonListener(b33);
 
-        currBid = (EditText) findViewById(R.id.playerABid);
+        currentBidA = (EditText) findViewById(R.id.currentBidA);
+        setBidListener(currentBidA);
+        toggleView();
+    }
 
+    private void setBidListener(final EditText currBid) {
         currBid.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    Toast.makeText(getApplicationContext(), "text: " + currBid.getText().toString(), Toast.LENGTH_SHORT).show();
+                    Integer currentBidA = Integer.parseInt(currBid.getText().toString());
+                    currBid.setText("");
+                    Double randomBid = (Math.random() * (remainingBidB - 1)) + 1;
+                    Integer currentBidB = randomBid.intValue();
+                    currentBidBText.setText(currentBidB.toString());
+                    if(currentBidA > currentBidB) {
+                        nextTurn = GameStatus.PLAYER_A_TURN;
+                        remainingBidA -= currentBidA;
+                        remainingBidB += currentBidA;
+                        bidNotReceived = false;
+                    } else if (currentBidA < currentBidB) {
+                        nextTurn = GameStatus.PLAYER_B_TURN;
+                        remainingBidB -= currentBidB;
+                        remainingBidA += currentBidB;
+                        makeAMove();
+                    } else {
+                        // TODO: bid again
+                    }
+                    updateBids();
+                    toggleView();
                     handled = true;
                 }
                 return handled;
             }
         } );
+    }
 
+    private void makeAMove() {
+        Button[][] buttons = {{b11, b12, b13}, {b21, b22, b23}, {b31, b32, b33}};
+        GameStatus[][] table = getCurrentGameStatus();
+        for(int i = 0; i < 3; i++) {
+            for(int j = 0; j < 3; j++) {
+                if(table[i][j] == GameStatus.BLANK) {
+                    setText(buttons[i][j]);
+                    return;
+                }
+            }
+        }
+    }
+
+    private void updateBids() {
+        remainingBidAText.setText(remainingBidA.toString());
+        remainingBidBText.setText(remainingBidB.toString());
+    }
+
+    private void toggleView() {
+
+        currentBidA.setEnabled(bidNotReceived);
+
+        b11.setEnabled(!bidNotReceived);
+        b12.setEnabled(!bidNotReceived);
+        b13.setEnabled(!bidNotReceived);
+
+        b21.setEnabled(!bidNotReceived);
+        b22.setEnabled(!bidNotReceived);
+        b23.setEnabled(!bidNotReceived);
+
+        b31.setEnabled(!bidNotReceived);
+        b32.setEnabled(!bidNotReceived);
+        b33.setEnabled(!bidNotReceived);
     }
 
     private void setButtonListener(final Button button) {
@@ -108,6 +175,8 @@ public class MenuActivity extends AppCompatActivity
             button.setText("X");
             nextTurn = GameStatus.PLAYER_A_TURN;
         }
+        bidNotReceived = true;
+        toggleView();
         GameStatus status = updateGameStatus();
         if(status != GameStatus.BLANK) {
             Intent i = getBaseContext().getPackageManager()
@@ -119,22 +188,7 @@ public class MenuActivity extends AppCompatActivity
 
     private GameStatus updateGameStatus() {
 
-        GameStatus[][] table = {
-                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
-                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
-                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK}};
-
-        table[0][0] = getCellStatus(b11);
-        table[0][1] = getCellStatus(b12);
-        table[0][2] = getCellStatus(b13);
-
-        table[1][0] = getCellStatus(b21);
-        table[1][1] = getCellStatus(b22);
-        table[1][2] = getCellStatus(b23);
-
-        table[2][0] = getCellStatus(b31);
-        table[2][1] = getCellStatus(b32);
-        table[2][2] = getCellStatus(b33);
+        GameStatus[][] table = getCurrentGameStatus();
 
         GameStatus finalGameStatus = GameStatus.BLANK;
         // row checking
@@ -167,6 +221,27 @@ public class MenuActivity extends AppCompatActivity
             }
         }
         return finalGameStatus;
+    }
+
+    @NonNull
+    private GameStatus[][] getCurrentGameStatus() {
+        GameStatus[][] table = {
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK},
+                {GameStatus.BLANK, GameStatus.BLANK, GameStatus.BLANK}};
+
+        table[0][0] = getCellStatus(b11);
+        table[0][1] = getCellStatus(b12);
+        table[0][2] = getCellStatus(b13);
+
+        table[1][0] = getCellStatus(b21);
+        table[1][1] = getCellStatus(b22);
+        table[1][2] = getCellStatus(b23);
+
+        table[2][0] = getCellStatus(b31);
+        table[2][1] = getCellStatus(b32);
+        table[2][2] = getCellStatus(b33);
+        return table;
     }
 
     private GameStatus getCellStatus(Button button) {
