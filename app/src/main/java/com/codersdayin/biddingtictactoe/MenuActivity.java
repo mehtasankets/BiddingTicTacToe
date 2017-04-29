@@ -10,10 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity
@@ -21,6 +27,7 @@ public class MenuActivity extends AppCompatActivity
 
     GameStatus nextTurn;
     Button b11, b12, b13, b21, b22, b23, b31, b32, b33;
+    EditText currBid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,21 @@ public class MenuActivity extends AppCompatActivity
         setButtonListener(b31);
         setButtonListener(b32);
         setButtonListener(b33);
+
+        currBid = (EditText) findViewById(R.id.playerABid);
+
+        currBid.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    Toast.makeText(getApplicationContext(), "text: " + currBid.getText().toString(), Toast.LENGTH_SHORT).show();
+                    handled = true;
+                }
+                return handled;
+            }
+        } );
+
     }
 
     private void setButtonListener(final Button button) {
