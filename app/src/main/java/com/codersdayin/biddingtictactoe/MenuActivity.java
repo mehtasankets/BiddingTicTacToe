@@ -3,7 +3,6 @@ package com.codersdayin.biddingtictactoe;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,9 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    GameStatus nextTurn;
+    Button b11, b12, b13, b21, b22, b23, b31, b32, b33;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,40 @@ public class MenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        nextTurn = GameStatus.PLAYER_A_TURN;
+
+        b11 = (Button) findViewById(R.id.b11);
+        b12 = (Button) findViewById(R.id.b12);
+        b13 = (Button) findViewById(R.id.b13);
+
+        b21 = (Button) findViewById(R.id.b21);
+        b22 = (Button) findViewById(R.id.b22);
+        b22 = (Button) findViewById(R.id.b23);
+
+        b31 = (Button) findViewById(R.id.b31);
+        b32 = (Button) findViewById(R.id.b32);
+        b33 = (Button) findViewById(R.id.b33);
+
+        b11.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setText(b11);
+            }
+        });
+    }
+
+    private void setText(Button button) {
+        if(button.getText() == null || button.getText().equals("")) {
+            return;
+        }
+        if(nextTurn == GameStatus.PLAYER_A_TURN) {
+            button.setText("O");
+            nextTurn = GameStatus.PLAYER_B_TURN;
+        } else {
+            button.setText("X");
+            nextTurn = GameStatus.PLAYER_A_TURN;
+        }
     }
 
     @Override
